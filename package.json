@@ -1,6 +1,6 @@
 {
   "name": "YEPCLOCK",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "An electron app, showing time in a few places.",
   "main": "app.js",
   "scripts": {
@@ -8,12 +8,18 @@
   },
   "build": {
     "appId": "YEPCLOCK",
+    "productName": "YEP CLOCK",
     "win": {
       "target": "nsis",
       "icon": "build/logo.png",
-      "artifactName": "${productName} Setup.${ext}"
+      "artifactName": "${productName} Setup.${ext}",
+      "publish": "github"
     },
-    "publish": "always"
+    "snap": {
+      "icon": "build/logo.png",
+      "artifactName": "${productName} Setup.${ext}",
+      "publish": "github"
+    }
   },
   "keywords": [],
   "author": "Atlas <atlas@twplayer.co>",
