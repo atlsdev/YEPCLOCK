@@ -48,12 +48,33 @@
                 width: 64px;
                 height: 64px;
         	}
+
+        	.clock img:hover {
+        		cursor: pointer;
+        	}
         </style>
     </head>
     <body>
     	<script type="text/javascript">
     		document.body.onload = () => {
+    			var is12hr = false;
     			var times = $(".times").children();
+
+    			$(".clock img").click(() => {
+    				is12hr = !is12hr;
+	    			times.each(idx => {
+	    				var el = times[idx];
+	    				var d = new Date();
+
+	    				var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+
+	    				var offset = el.dataset.offset;
+
+	    				var ts = new Date(utc + (3600000*offset));
+
+	    				el.childNodes[1].innerHTML = is12hr == true ? formatAMPM(ts) : `${ts.getHours() < 10 ? "0"+ts.getHours() : ts.getHours()}:${ts.getMinutes() < 10 ? "0"+ts.getMinutes(): ts.getMinutes()}`;
+	    			});
+    			});
 
     			times.each(idx => {
     				var el = times[idx];
@@ -65,7 +86,7 @@
 
     				var ts = new Date(utc + (3600000*offset));
 
-    				el.childNodes[1].innerHTML = `${ts.getHours() < 10 ? "0"+ts.getHours() : ts.getHours()}:${ts.getMinutes() < 10 ? "0"+ts.getMinutes(): ts.getMinutes()}`;
+    				el.childNodes[1].innerHTML = is12hr == true ? formatAMPM(ts) : `${ts.getHours() < 10 ? "0"+ts.getHours() : ts.getHours()}:${ts.getMinutes() < 10 ? "0"+ts.getMinutes(): ts.getMinutes()}`;
     			});
     			setInterval(() => {
 	    			times.each(idx => {
@@ -78,9 +99,21 @@
 
 	    				var ts = new Date(utc + (3600000*offset));
 
-	    				el.childNodes[1].innerHTML = `${ts.getHours() < 10 ? "0"+ts.getHours() : ts.getHours()}:${ts.getMinutes() < 10 ? "0"+ts.getMinutes(): ts.getMinutes()}`;
+	    				el.childNodes[1].innerHTML = is12hr == true ? formatAMPM(ts) : `${ts.getHours() < 10 ? "0"+ts.getHours() : ts.getHours()}:${ts.getMinutes() < 10 ? "0"+ts.getMinutes(): ts.getMinutes()}`;
 	    			});
 	    		}, 1000);
+
+				function formatAMPM(date) {
+  					var hours = date.getHours();
+  					var minutes = date.getMinutes();
+  					var ampm = hours >= 12 ? 'PM' : 'AM';
+  					hours = hours % 12;
+  					hours = hours ? hours : 12;
+  					minutes = minutes < 10 ? '0'+minutes : minutes;
+  					var strTime = hours + ':' + minutes + ' ' + ampm;
+  					return strTime;
+				};
+
     		};
     	</script>
     	<h1 class="clock"><img src="yep.png" alt="YEP"> CLOCK</h1>
