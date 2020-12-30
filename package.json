@@ -16,7 +16,6 @@
       "publish": "github"
     },
     "snap": {
-      "icon": "build/logo.png",
       "artifactName": "${productName} Setup.${ext}",
       "publish": "github"
     }
