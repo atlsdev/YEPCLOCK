@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>YEP CLOCK</title>
+        <meta name="description" content="Times of the world...?">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+        <style type="text/css">
+        	html {
+        		background-color: #111111;
+        		font-family: Arial;
+        	}
+
+        	* {
+        		color: white;
+        		margin: 0;
+        		padding: 0;
+        	}
+
+        	body {
+        		display: flex;
+        		justify-content: center;
+        		flex-direction: column;
+        		height: 100vh;
+        	}
+
+        	.times div {
+        		text-align: center;
+        	}
+
+        	.times {
+        		padding-top: 10%;
+				width: 100%;
+				height: 100%;
+        	}
+
+        	.clock {
+        		font-size: 60px;
+        		text-align: center;
+        		margin-block-start: 0;
+        		margin-block-end: 0;
+        	}
+
+        	.clock img {
+        		vertical-align: top;
+                width: 64px;
+                height: 64px;
+        	}
+        </style>
+    </head>
+    <body>
+    	<script type="text/javascript">
+    		document.body.onload = () => {
+    			var times = $(".times").children();
+
+    			times.each(idx => {
+    				var el = times[idx];
+    				var d = new Date();
+
+    				var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+
+    				var offset = el.dataset.offset;
+
+    				var ts = new Date(utc + (3600000*offset));
+
+    				el.childNodes[1].innerHTML = `${ts.getHours() < 10 ? "0"+ts.getHours() : ts.getHours()}:${ts.getMinutes() < 10 ? "0"+ts.getMinutes(): ts.getMinutes()}`;
+    			});
+    			setInterval(() => {
+	    			times.each(idx => {
+	    				var el = times[idx];
+	    				var d = new Date();
+
+	    				var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+
+	    				var offset = el.dataset.offset;
+
+	    				var ts = new Date(utc + (3600000*offset));
+
+	    				el.childNodes[1].innerHTML = `${ts.getHours() < 10 ? "0"+ts.getHours() : ts.getHours()}:${ts.getMinutes() < 10 ? "0"+ts.getMinutes(): ts.getMinutes()}`;
+	    			});
+	    		}, 1000);
+    		};
+    	</script>
+    	<h1 class="clock"><img src="yep.png" alt="YEP"> CLOCK</h1>
+    	<div class="times">
+    		<div class="pst" data-offset="-8"><h1>Pacific Standard Time:</h1><h2 class="timestamp"></h2></div>
+    		<div class="mst" data-offset="-7"><h1>Mountain Standard Time:</h1><h2 class="timestamp"></h2></div>
+    		<div class="cst" data-offset="-6"><h1>Central Standard Time:</h1><h2 class="timestamp"></h2></div>
+    		<div class="est" data-offset="-5"><h1>Eastern Standard Time:</h1><h2 class="timestamp"></h2></div>
+    		<div class="utc" data-offset="0"><h1>Coordinated Universal Time:</h1><h2 class="timestamp"></h2></div>
+    		<div class="denmark" data-offset="+1"><h1>Denmark:</h1><h2 class="timestamp"></h2></div>
+    		<div class="japan" data-offset="+9"><h1>Japan:</h1><h2 class="timestamp"></h2></div>
+    	</div>
+    </body>
+</html>
